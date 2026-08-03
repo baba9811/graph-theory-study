@@ -11,18 +11,22 @@ def edmonds_karp(
         raise ValueError("서로 다른 기존 source와 sink가 필요합니다")
     # ponytail: O(|V|²) 잔여 행렬; 메모리가 문제일 때 희소 dict로 교체한다.
     residual = {left: {right: 0 for right in vertices} for left in vertices}
+    adjacency = {vertex: set() for vertex in vertices}
     for left, neighbors in capacity.items():
         for right, amount in neighbors.items():
             if amount < 0:
                 raise ValueError("용량은 음수일 수 없습니다")
             residual[left][right] += amount
+            adjacency[left].add(right)
+            adjacency[right].add(left)
     total = 0
     while True:
         parents = {source: None}
         queue = deque([source])
         while queue and sink not in parents:
             current = queue.popleft()
-            for neighbor, remaining in residual[current].items():
+            for neighbor in adjacency[current]:
+                remaining = residual[current][neighbor]
                 if remaining > 0 and neighbor not in parents:
                     parents[neighbor] = current
                     queue.append(neighbor)
@@ -45,7 +49,8 @@ def edmonds_karp(
     queue = deque([source])
     while queue:
         current = queue.popleft()
-        for neighbor, remaining in residual[current].items():
+        for neighbor in adjacency[current]:
+            remaining = residual[current][neighbor]
             if remaining > 0 and neighbor not in reachable:
                 reachable.add(neighbor)
                 queue.append(neighbor)
