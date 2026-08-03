@@ -19,3 +19,9 @@ def test_rejects_repeated_or_nonadjacent_vertices(lesson_module):
     assert not lesson.is_valid_path(graph, ["A", "B", "A"])
     assert not lesson.is_valid_path(graph, ["A", "C"])
     assert not lesson.is_valid_path(graph, [])
+
+
+def test_cycle_definition_requires_three_vertices_and_no_repeated_edge():
+    lesson = open("lessons/02-degree-path-cycle.md", encoding="utf-8").read()
+    assert "최소 세 개의 서로 다른 정점" in lesson
+    assert "같은 간선을 두 번 지나지" in lesson
