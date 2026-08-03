@@ -24,3 +24,8 @@ def test_empty_disconnected_and_cyclic_graphs_are_not_trees(lesson_module):
 def test_rejects_asymmetric_undirected_representation(lesson_module):
     lesson = lesson_module(5)
     assert not lesson.is_tree({"A": {"B"}, "B": set()})
+
+
+def test_self_loop_is_not_a_tree(lesson_module):
+    lesson = lesson_module(5)
+    assert not lesson.is_tree({"A": {"A"}})

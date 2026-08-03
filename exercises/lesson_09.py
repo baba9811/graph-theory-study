@@ -3,6 +3,11 @@ def bellman_ford(
     edges: list[tuple[str, str, float]],
     start: str,
 ) -> tuple[dict[str, float], dict[str, str | None]]:
+    """음수 간선을 허용해 start 기준 최단 거리와 부모를 구합니다.
+
+    전제: 시작점과 모든 간선 끝점은 `vertices`에 있고 도달 가능한 음수 사이클은 없습니다.
+    예: `bellman_ford({"A"}, [], "A")` → `({"A": 0}, {"A": None})`
+    """
     if start not in vertices:
         raise ValueError("시작 정점이 vertices에 없습니다")
     if any(source not in vertices or target not in vertices for source, target, _ in edges):

@@ -7,6 +7,11 @@ from exercises.lesson_11 import kruskal
 def analyze_transport_network(
     graph: dict[str, dict[str, float]], start: str, end: str
 ) -> dict[str, object]:
+    """교통망의 연결성·최단 경로·최소 기반 시설 비용을 보고합니다.
+
+    전제: `start`, `end`는 기존 정점이고 가중치는 비음수이며 양방향 값이 같습니다.
+    예: `analyze_transport_network({"A": {}}, "A", "A")` → `{"connected": True, "route": ["A"], "distance": 0, "infrastructure_cost": 0.0}`
+    """
     if start not in graph or end not in graph:
         raise ValueError("start와 end는 기존 정점이어야 합니다")
     for source, neighbors in graph.items():

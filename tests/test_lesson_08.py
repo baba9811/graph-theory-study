@@ -27,3 +27,11 @@ def test_rejects_unknown_start(lesson_module):
     lesson = lesson_module(8)
     with pytest.raises(ValueError):
         lesson.dijkstra({"A": {}}, "Z")
+
+
+def test_rejects_unknown_neighbor(lesson_module):
+    import pytest
+
+    lesson = lesson_module(8)
+    with pytest.raises(ValueError):
+        lesson.dijkstra({"A": {"missing": 1}}, "A")

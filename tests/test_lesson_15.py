@@ -27,6 +27,19 @@ def test_rejects_disconnected_nonzero_degree_graph(lesson_module):
     assert lesson.eulerian_trail([]) == []
 
 
+def test_rejects_two_disconnected_triangles(lesson_module):
+    lesson = lesson_module(15)
+    triangles = [
+        ("A", "B"),
+        ("B", "C"),
+        ("C", "A"),
+        ("D", "E"),
+        ("E", "F"),
+        ("F", "D"),
+    ]
+    assert lesson.eulerian_trail(triangles) is None
+
+
 def test_workbook_uses_disconnected_all_even_connectivity_counterexample():
     workbook = Path("workbook/15-euler-trails.md").read_text(encoding="utf-8")
     assert "A-B-C-A" in workbook

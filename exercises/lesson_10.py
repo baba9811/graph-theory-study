@@ -1,6 +1,11 @@
 def floyd_warshall(
     vertices: set[str], edges: list[tuple[str, str, float]]
 ) -> dict[str, dict[str, float]]:
+    """모든 정점 쌍의 최단 거리 표를 구합니다.
+
+    전제: 모든 간선 끝점은 `vertices`에 있고 음수 사이클은 없습니다.
+    예: `floyd_warshall({"A"}, [])` → `{"A": {"A": 0}}`
+    """
     distances = {
         source: {
             target: 0 if source == target else float("inf")

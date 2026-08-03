@@ -15,3 +15,13 @@ def test_odd_cycle_is_not_bipartite(lesson_module):
 def test_empty_graph_has_empty_coloring(lesson_module):
     lesson = lesson_module(12)
     assert lesson.bipartite_coloring({}) == {}
+
+
+def test_rejects_non_simple_or_asymmetric_input(lesson_module):
+    import pytest
+
+    lesson = lesson_module(12)
+    with pytest.raises(ValueError, match="무방향 단순 그래프"):
+        lesson.bipartite_coloring({"A": {"A"}})
+    with pytest.raises(ValueError, match="무방향 단순 그래프"):
+        lesson.bipartite_coloring({"A": {"B"}, "B": set()})

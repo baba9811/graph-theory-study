@@ -16,6 +16,14 @@ def test_greedy_coloring_rejects_unknown_neighbor(lesson_module):
         lesson.greedy_coloring({"A": {"X"}})
 
 
+def test_greedy_coloring_rejects_non_simple_or_asymmetric_input(lesson_module):
+    lesson = lesson_module(17)
+    with pytest.raises(ValueError, match="무방향 단순 그래프"):
+        lesson.greedy_coloring({"A": {"A"}})
+    with pytest.raises(ValueError, match="무방향 단순 그래프"):
+        lesson.greedy_coloring({"A": {"B"}, "B": set()})
+
+
 def test_planar_edge_bound_for_small_graphs(lesson_module):
     lesson = lesson_module(17)
     assert lesson.within_planar_edge_bound(0, 0)

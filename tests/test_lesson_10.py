@@ -22,3 +22,11 @@ def test_rejects_negative_cycle(lesson_module):
     lesson = lesson_module(10)
     with pytest.raises(ValueError, match="음수 사이클"):
         lesson.floyd_warshall({"A", "B"}, [("A", "B", -2), ("B", "A", 1)])
+
+
+def test_rejects_unknown_endpoint(lesson_module):
+    import pytest
+
+    lesson = lesson_module(10)
+    with pytest.raises(ValueError):
+        lesson.floyd_warshall({"A"}, [("A", "missing", 1)])

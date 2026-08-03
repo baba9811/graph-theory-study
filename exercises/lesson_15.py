@@ -1,4 +1,9 @@
 def eulerian_trail(edges: list[tuple[str, str]]) -> list[str] | None:
+    """무방향 다중 그래프의 오일러 트레일을 구합니다.
+
+    전제: 각 튜플은 무방향 간선 하나이며 평행 간선은 별개로 유지됩니다.
+    예: `eulerian_trail([])` → `[]`
+    """
     if not edges:
         return []
     adjacency: dict[str, list[tuple[str, int]]] = {}

@@ -27,3 +27,13 @@ def test_kruskal_rejects_disconnected_graph(lesson_module):
     lesson = lesson_module(11)
     with pytest.raises(ValueError, match="연결"):
         lesson.kruskal({"A", "B", "C"}, [("A", "B", 1)])
+
+
+def test_kruskal_rejects_empty_graph_and_unknown_endpoint(lesson_module):
+    import pytest
+
+    lesson = lesson_module(11)
+    with pytest.raises(ValueError):
+        lesson.kruskal(set(), [])
+    with pytest.raises(ValueError):
+        lesson.kruskal({"A"}, [("A", "missing", 1)])

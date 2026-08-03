@@ -19,3 +19,11 @@ def test_rejects_overlapping_partitions(lesson_module):
     lesson = lesson_module(13)
     with pytest.raises(ValueError):
         lesson.maximum_bipartite_matching({"A": {"B"}, "B": set()}, {"A", "B"})
+
+
+def test_rejects_missing_left_vertex(lesson_module):
+    import pytest
+
+    lesson = lesson_module(13)
+    with pytest.raises(ValueError):
+        lesson.maximum_bipartite_matching({"A": {"1"}}, {"A", "missing"})

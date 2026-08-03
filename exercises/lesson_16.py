@@ -1,4 +1,9 @@
 def hamiltonian_path(graph: dict[str, set[str]]) -> list[str] | None:
+    """모든 정점을 정확히 한 번 지나는 경로를 찾습니다.
+
+    전제: 모든 이웃은 `graph`의 키입니다.
+    예: `hamiltonian_path({"A": set()})` → `["A"]`
+    """
     for neighbors in graph.values():
         for neighbor in neighbors:
             if neighbor not in graph:

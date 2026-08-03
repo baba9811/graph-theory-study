@@ -1,6 +1,13 @@
 def greedy_coloring(graph: dict[str, set[str]]) -> dict[str, int]:
+    """무방향 단순 그래프에 결정적인 탐욕 색칠을 만듭니다."""
     if any(neighbor not in graph for neighbors in graph.values() for neighbor in neighbors):
         raise ValueError("인접 정점이 graph에 없습니다")
+    if any(
+        neighbor == vertex or vertex not in graph[neighbor]
+        for vertex, neighbors in graph.items()
+        for neighbor in neighbors
+    ):
+        raise ValueError("무방향 단순 그래프가 필요합니다")
     # ponytail: 탐욕 휴리스틱; 최소 색 수가 필수일 때 정확 탐색으로 교체한다.
     colors = {}
     order = sorted(graph, key=lambda vertex: (-len(graph[vertex]), vertex))
@@ -14,6 +21,7 @@ def greedy_coloring(graph: dict[str, set[str]]) -> dict[str, int]:
 
 
 def within_planar_edge_bound(vertex_count: int, edge_count: int) -> bool:
+    """단순 그래프의 정점·간선 수가 필요한 평면 간선 상한 안인지 확인합니다."""
     if vertex_count < 0 or edge_count < 0:
         raise ValueError("정점 수와 간선 수는 음수일 수 없습니다")
     if vertex_count < 3:

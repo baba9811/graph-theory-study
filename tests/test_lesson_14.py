@@ -42,3 +42,28 @@ def test_rejects_missing_or_identical_terminals(lesson_module):
         lesson.edmonds_karp(capacity, "s", "missing")
     with pytest.raises(ValueError):
         lesson.edmonds_karp(capacity, "s", "s")
+
+
+def test_reverse_residual_rerouting_and_original_cut_capacity(lesson_module):
+    lesson = lesson_module(14)
+    # 정렬 BFS의 첫 경로 s-a-x-t를 취소해 s-b-x-t로 돌려야 유량 2가 된다.
+    capacity = {
+        "s": {"a": 1, "b": 1},
+        "a": {"x": 1, "y": 1},
+        "b": {"x": 1},
+        "x": {"t": 1},
+        "y": {"t": 1},
+        "t": {},
+    }
+
+    value, source_side = lesson.edmonds_karp(capacity, "s", "t")
+    cut_capacity = sum(
+        amount
+        for source in source_side
+        for target, amount in capacity[source].items()
+        if target not in source_side
+    )
+
+    assert value == 2
+    assert "s" in source_side and "t" not in source_side
+    assert cut_capacity == value

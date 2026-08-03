@@ -1,4 +1,9 @@
 def strongly_connected_components(graph: dict[str, set[str]]) -> list[set[str]]:
+    """방향 그래프를 강한 연결 요소들로 나눕니다.
+
+    전제: 모든 이웃은 `graph`의 키입니다.
+    예: `strongly_connected_components({"A": set()})` → `[{"A"}]`
+    """
     if any(neighbor not in graph for neighbors in graph.values() for neighbor in neighbors):
         raise ValueError("모든 정점은 graph의 키여야 합니다")
 

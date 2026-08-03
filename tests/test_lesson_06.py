@@ -25,6 +25,14 @@ def test_rejects_cycle(lesson_module):
         lesson.topological_sort({"A": {"B"}, "B": {"A"}})
 
 
+def test_rejects_unknown_neighbor(lesson_module):
+    import pytest
+
+    lesson = lesson_module(6)
+    with pytest.raises(ValueError):
+        lesson.topological_sort({"A": {"missing"}})
+
+
 def test_lesson_distinguishes_cycle_from_downstream_vertices():
     from pathlib import Path
 

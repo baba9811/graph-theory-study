@@ -1,0 +1,4 @@
+interface:
+  display_name: "Finish Graph Lesson"
+  short_description: "Validate and finish the active graph lesson"
+  default_prompt: "Use $done to validate and finish the active graph lesson."

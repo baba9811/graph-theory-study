@@ -2,11 +2,11 @@ from solutions.lesson_04 import connected_components
 
 
 def is_tree(graph: dict[str, set[str]]) -> bool:
-    """무방향 그래프가 트리이면 True를 반환합니다."""
+    """대칭이고 자기 루프가 없는 무방향 그래프가 트리인지 판별합니다."""
     if not graph:
         return False
     if any(
-        neighbor not in graph or vertex not in graph[neighbor]
+        neighbor not in graph or neighbor == vertex or vertex not in graph[neighbor]
         for vertex, neighbors in graph.items()
         for neighbor in neighbors
     ):

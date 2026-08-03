@@ -1,6 +1,11 @@
 def maximum_bipartite_matching(
     graph: dict[str, set[str]], left: set[str]
 ) -> dict[str, str]:
+    """증강 경로로 최대 이분 매칭을 구합니다.
+
+    전제: 모든 `left` 정점은 키이고 그 이웃은 왼쪽 파티션에 속하지 않습니다.
+    예: `maximum_bipartite_matching({"A": {"1"}}, {"A"})` → `{"A": "1"}`
+    """
     if any(vertex not in graph for vertex in left):
         raise ValueError("모든 왼쪽 정점은 graph의 키여야 합니다")
     if any(neighbor in left for vertex in left for neighbor in graph[vertex]):

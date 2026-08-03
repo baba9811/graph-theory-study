@@ -22,3 +22,13 @@ def test_ignores_unreachable_negative_cycle(lesson_module):
         {"A", "B", "C"}, [("B", "C", -2), ("C", "B", -2)], "A"
     )
     assert distances["B"] == float("inf")
+
+
+def test_rejects_unknown_start_and_endpoint(lesson_module):
+    import pytest
+
+    lesson = lesson_module(9)
+    with pytest.raises(ValueError):
+        lesson.bellman_ford({"A"}, [], "missing")
+    with pytest.raises(ValueError):
+        lesson.bellman_ford({"A"}, [("A", "missing", 1)], "A")

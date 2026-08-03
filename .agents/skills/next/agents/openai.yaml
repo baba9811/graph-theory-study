@@ -1,0 +1,4 @@
+interface:
+  display_name: "Next Graph Lesson"
+  short_description: "Start the next graph theory lesson"
+  default_prompt: "Use $next to start or resume the next graph theory lesson."

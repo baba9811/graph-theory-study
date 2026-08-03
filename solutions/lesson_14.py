@@ -4,6 +4,7 @@ from collections import deque
 def edmonds_karp(
     capacity: dict[str, dict[str, int]], source: str, sink: str
 ) -> tuple[int, set[str]]:
+    """최대 유량과 최소 컷을 `O(|V|² + |V||E|²)` 시간에 구합니다."""
     if any(neighbor not in capacity for neighbors in capacity.values() for neighbor in neighbors):
         raise ValueError("모든 정점은 capacity의 키여야 합니다")
     vertices = set(capacity)
@@ -25,7 +26,7 @@ def edmonds_karp(
         queue = deque([source])
         while queue and sink not in parents:
             current = queue.popleft()
-            for neighbor in adjacency[current]:
+            for neighbor in sorted(adjacency[current]):
                 remaining = residual[current][neighbor]
                 if remaining > 0 and neighbor not in parents:
                     parents[neighbor] = current
@@ -49,7 +50,7 @@ def edmonds_karp(
     queue = deque([source])
     while queue:
         current = queue.popleft()
-        for neighbor in adjacency[current]:
+        for neighbor in sorted(adjacency[current]):
             remaining = residual[current][neighbor]
             if remaining > 0 and neighbor not in reachable:
                 reachable.add(neighbor)
