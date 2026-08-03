@@ -2,7 +2,7 @@
 
 | Lesson | Status |
 |---:|---|
-| 1 | not_started |
+| 1 | completed |
 | 2 | not_started |
 | 3 | not_started |
 | 4 | not_started |
