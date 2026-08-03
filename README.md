@@ -33,6 +33,8 @@ GRAPH_STUDY_SOLUTIONS=1 uv run pytest -v
 
 ## 수업
 
+약어: NP (Nondeterministic Polynomial, 비결정론적 다항식)는 비결정론적 다항 시간 문제를 뜻합니다.
+
 1. 그래프 기초와 표현
 2. 차수, 보행, 경로, 사이클
 3. 너비 우선 탐색
