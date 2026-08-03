@@ -35,6 +35,14 @@ def test_next_handles_a_completed_course_without_changing_progress():
     assert "`PROGRESS.md`를 변경하지 않는다" in contract
 
 
+def test_next_normalizes_completed_learner_answers_without_solving_them():
+    contract = Path("AGENTS.md").read_text(encoding="utf-8")
+    assert "개념적으로 완성된 답안" in contract
+    assert "의미를 보존" in contract
+    assert "`LEARNER_TASK` 표시를 제거" in contract
+    assert "아직 시도하지 않았거나 개념적으로 불완전한 답안" in contract
+
+
 def test_done_requires_an_exact_staged_set_and_preserves_existing_index():
     contract = Path("AGENTS.md").read_text(encoding="utf-8")
     assert "기존 index" in contract
