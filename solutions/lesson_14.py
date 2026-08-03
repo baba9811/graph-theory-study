@@ -20,13 +20,17 @@ def edmonds_karp(
             residual[left][right] += amount
             adjacency[left].add(right)
             adjacency[right].add(left)
+    ordered_adjacency = {
+        vertex: tuple(sorted(neighbors))
+        for vertex, neighbors in adjacency.items()
+    }
     total = 0
     while True:
         parents = {source: None}
         queue = deque([source])
         while queue and sink not in parents:
             current = queue.popleft()
-            for neighbor in sorted(adjacency[current]):
+            for neighbor in ordered_adjacency[current]:
                 remaining = residual[current][neighbor]
                 if remaining > 0 and neighbor not in parents:
                     parents[neighbor] = current
@@ -50,7 +54,7 @@ def edmonds_karp(
     queue = deque([source])
     while queue:
         current = queue.popleft()
-        for neighbor in sorted(adjacency[current]):
+        for neighbor in ordered_adjacency[current]:
             remaining = residual[current][neighbor]
             if remaining > 0 and neighbor not in reachable:
                 reachable.add(neighbor)

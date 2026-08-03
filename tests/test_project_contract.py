@@ -43,6 +43,19 @@ def test_done_requires_an_exact_staged_set_and_preserves_existing_index():
     assert "기존 index 항목은 건드리지 않는다" in contract
 
 
+def test_done_failure_branches_restore_the_active_progress_invariant():
+    contract = Path("AGENTS.md").read_text(encoding="utf-8")
+    lines = contract.splitlines()
+    branches = [
+        next(line for line in lines if marker in line)
+        for marker in ("집합이 다르면", "커밋이 실패하면")
+    ]
+
+    assert all("`in_progress`" in branch for branch in branches)
+    assert all("`Active lesson`" in branch for branch in branches)
+    assert all("`<NN>`" in branch for branch in branches)
+
+
 def test_done_stops_before_state_changes_when_learner_work_remains():
     contract = Path("AGENTS.md").read_text(encoding="utf-8")
     assert "완전한 워크북 답안" in contract

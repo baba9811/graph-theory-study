@@ -23,16 +23,20 @@ def edmonds_karp(
             residual[left][right] += amount
             adjacency[left].add(right)
             adjacency[right].add(left)
+    ordered_adjacency = {
+        vertex: tuple(sorted(neighbors))
+        for vertex, neighbors in adjacency.items()
+    }
 
     total = 0
-    # LEARNER_TASK: adjacency 이웃을 정렬해 잔여 용량이 양수인 s-t 경로를 BFS로 찾으세요.
+    # LEARNER_TASK: ordered_adjacency를 따라 잔여 용량이 양수인 s-t 경로를 BFS로 찾으세요.
     # LEARNER_TASK: 병목값만큼 정방향 잔여 용량을 줄이고 역방향은 늘리세요.
 
     reachable = {source}
     queue = deque([source])
     while queue:
         current = queue.popleft()
-        for neighbor in sorted(adjacency[current]):
+        for neighbor in ordered_adjacency[current]:
             remaining = residual[current][neighbor]
             if remaining > 0 and neighbor not in reachable:
                 reachable.add(neighbor)
