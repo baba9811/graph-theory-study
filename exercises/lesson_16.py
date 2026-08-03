@@ -1,4 +1,8 @@
 def hamiltonian_path(graph: dict[str, set[str]]) -> list[str] | None:
+    for neighbors in graph.values():
+        for neighbor in neighbors:
+            if neighbor not in graph:
+                raise ValueError("인접 정점이 graph에 없습니다")
     if not graph:
         return []
 
@@ -7,8 +11,6 @@ def hamiltonian_path(graph: dict[str, set[str]]) -> list[str] | None:
         if len(path) == len(graph):
             return path.copy()
         for neighbor in sorted(graph[path[-1]]):
-            if neighbor not in graph:
-                raise ValueError("인접 정점이 graph에 없습니다")
             if neighbor not in used:
                 # LEARNER_TASK: neighbor를 used와 path에 추가해 후보를 선택하세요.
                 result = extend(path, used)
