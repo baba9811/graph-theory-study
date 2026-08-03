@@ -1,10 +1,16 @@
+from itertools import pairwise
+
+
 def degree_map(graph: dict[str, set[str]]) -> dict[str, int]:
     """각 정점의 차수를 딕셔너리로 반환합니다.
 
     전제: `graph`는 무방향 인접 리스트입니다.
     예: `degree_map({"A": {"B"}, "B": {"A"}})` → `{"A": 1, "B": 1}`
     """
-    raise NotImplementedError("LEARNER_TASK")
+    d_map = {}
+    for k, v in graph.items():
+        d_map[k]=len(v)
+    return d_map
 
 
 def is_valid_path(graph: dict[str, set[str]], path: list[str]) -> bool:
@@ -13,4 +19,11 @@ def is_valid_path(graph: dict[str, set[str]], path: list[str]) -> bool:
     전제: 경로 후보의 정점은 문자열이며 `graph`의 키여야 합니다.
     예: `is_valid_path({"A": {"B"}, "B": {"A"}}, ["A", "B"])` → `True`
     """
-    raise NotImplementedError("LEARNER_TASK")
+    if not path:
+        return False
+    if len(path) != len(set(path)):
+        return False
+    for u, v in pairwise(path):
+        if v not in graph[u]:
+            return False
+    return True
