@@ -35,7 +35,15 @@ def test_next_handles_a_completed_course_without_changing_progress():
     assert "`PROGRESS.md`를 변경하지 않는다" in contract
 
 
-def test_next_normalizes_completed_learner_answers_without_solving_them():
+def test_next_only_starts_a_new_lesson():
+    contract = Path("AGENTS.md").read_text(encoding="utf-8")
+    assert "`$next`는 새 수업 시작에만 사용한다" in contract
+    assert "`Active lesson`이 `none`이 아니면" in contract
+    assert "상태·답안을 변경하지 않는다" in contract
+    assert "일반 대화" in contract
+
+
+def test_ordinary_conversation_normalizes_completed_answers_without_solving():
     contract = Path("AGENTS.md").read_text(encoding="utf-8")
     assert "개념적으로 완성된 답안" in contract
     assert "의미를 보존" in contract
@@ -81,6 +89,8 @@ def test_readme_documents_supported_repo_skill_invocation():
     readme = Path("README.md").read_text(encoding="utf-8")
     assert "`$next`" in readme
     assert "`$done`" in readme
+    assert "새 수업" in readme
+    assert "일반 대화" in readme
     assert "`/skills`" in readme
     assert "새 채팅" in readme or "재시작" in readme
 
@@ -90,6 +100,7 @@ def test_repo_skills_delegate_to_the_authoritative_course_state_machine():
         "next": (
             'display_name: "Next Graph Lesson"',
             'short_description: "Start the next graph theory lesson"',
+            'default_prompt: "Use $next to start the next graph theory lesson."',
             "$next",
         ),
         "done": (
@@ -113,4 +124,6 @@ def test_repo_skills_delegate_to_the_authoritative_course_state_machine():
         assert f"name: {name}" in frontmatter
         assert "AGENTS.md" in skill
         assert "PROGRESS.md" in skill
+        if name == "next":
+            assert "resume or review" not in frontmatter
         assert all(value in agent for value in interface_values)
