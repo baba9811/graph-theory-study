@@ -8,11 +8,23 @@ def topological_sort(graph: dict[str, set[str]]) -> list[str]:
     예: `topological_sort({"A": {"B"}, "B": set()})` → `["A", "B"]`
     """
     indegree = {vertex: 0 for vertex in graph}
-    # LEARNER_TASK: 모든 간선을 순회해 indegree를 세고, 없는 정점은 ValueError로 거절하세요.
+    for g in graph:
+        for neighbor in graph[g]:
+            if neighbor not in graph:
+                raise ValueError
+            indegree[neighbor] += 1
 
     ready = [vertex for vertex, degree in indegree.items() if degree == 0]
     heapq.heapify(ready)
     order = []
-    # LEARNER_TASK: ready에서 하나씩 꺼내고, 이웃의 indegree가 0이 되면 넣으세요.
+    while ready:
+        current = heapq.heappop(ready)
+        order.append(current)
+        for neighbor in graph[current]:
+            indegree[neighbor] -= 1
+            if indegree[neighbor] == 0:
+                heapq.heappush(ready, neighbor)
 
-    raise NotImplementedError("LEARNER_TASK")
+    if len(order) < len(graph):
+        raise ValueError("사이클")
+    return order
