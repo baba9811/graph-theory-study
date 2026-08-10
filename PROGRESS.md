@@ -9,7 +9,7 @@
 | 5 | completed |
 | 6 | completed |
 | 7 | completed |
-| 8 | not_started |
+| 8 | completed |
 | 9 | not_started |
 | 10 | not_started |
 | 11 | not_started |
