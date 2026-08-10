@@ -11,8 +11,12 @@ def strongly_connected_components(graph: dict[str, set[str]]) -> list[set[str]]:
     finish_order = []
 
     def visit(vertex):
-        # LEARNER_TASK: DFS를 마칠 때 정점을 finish_order에 추가하세요.
-        pass
+        visited.add(vertex)
+        for neighbor in graph[vertex]:
+            if neighbor not in visited:
+                visit(neighbor)
+        finish_order.append(vertex)
+        return finish_order
 
     for vertex in graph:
         if vertex not in visited:
@@ -27,8 +31,16 @@ def strongly_connected_components(graph: dict[str, set[str]]) -> list[set[str]]:
     components = []
 
     def collect(vertex, component):
-        # LEARNER_TASK: 전치 그래프에서 DFS하며 component를 채우세요.
-        pass
+        visited.add(vertex)
+        component.add(vertex)
+        for neighbor in reversed_graph[vertex]:
+            if neighbor not in visited:
+                collect(neighbor, component)
+                component.add(neighbor)
 
-    # LEARNER_TASK: finish_order의 역순으로 아직 방문하지 않은 정점에서 collect를 시작하세요.
+    for vertex in reversed(finish_order):
+        if vertex not in visited:
+            component = set()
+            collect(vertex, component)
+            components.append(component)
     return components
