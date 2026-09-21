@@ -4,7 +4,11 @@
 
 ## 시작하기
 
+Python 3.11 이상과 [uv](https://docs.astral.sh/uv/getting-started/installation/)를 사용합니다. uv를 설치한 뒤 저장소를 내려받고 해당 디렉터리에서 의존성을 설치하세요.
+
 ```sh
+git clone https://github.com/baba9811/graph-theory-study.git
+cd graph-theory-study
 uv sync
 ```
 
