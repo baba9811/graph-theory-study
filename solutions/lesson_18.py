@@ -32,3 +32,4 @@ def analyze_transport_network(
         "distance": distances[end],
         "infrastructure_cost": infrastructure_cost,
     }
+
